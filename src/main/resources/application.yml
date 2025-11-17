@@ -7,10 +7,31 @@ spring:
 
 eureka:
   instance:
+    # 도커 네트워크 내부에서는 hostname을 서비스명으로 사용해야 한다.
     prefer-ip-address: false
-    hostname: localhost
+    hostname: eureka-server
+
   client:
+    # 유레카 서버는 자기 자신을 유레카에 등록하지 않는다.
     register-with-eureka: false
     fetch-registry: false
+
+    # 서비스명 기반(discovery-friendly)
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://eureka-server:3150/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info,prometheus,metrics
+  endpoint:
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
+      export:
+        prometheus:
+          enabled: true
+      tags:
+        application: ${spring.application.name}
