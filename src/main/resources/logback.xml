@@ -3,7 +3,7 @@
 
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http>
-            <url>https://loki.code-factory.co.kr/loki/api/v1/push</url>
+            <url>http://13.210.162.214:9600/loki/api/v1/push</url>
         </http>
 
         <lokiLabels>
